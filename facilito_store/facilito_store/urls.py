@@ -1,12 +1,12 @@
 from django.conf import settings
 from django.contrib import admin
-from django.urls import path
-from django.conf.urls.static import static
+from django.urls import path 
 
-from facilito_store.views import index
+from facilito_store.views import index,login_vw,logout_vw
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index, name='vw-index'),
-    path('principal', index, name='vw-principal'),
+    path('', login_vw, name='vw-login'),
+    path('logout', logout_vw, name='vw-logout'),
+    path('index', index, name='vw-index'),
 ]

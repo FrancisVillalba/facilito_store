@@ -1,0 +1,46 @@
+{% url 'vw-login' as login %}
+{% url 'vw-register' as register %} 
+{% url 'vw-logout' as logout %} 
+
+<nav class="navbar navbar-expand-md bg-dark navbar-dark ">
+    <a href="{% url 'vw-index' %}" class="navbar-brand">Facilito store</a>
+
+    <button type="button" name="button" class="navbar-toggler navbar-toggler-right" data-toggle="collapse" data-target="#navb">
+        <span class="navbar-toggler-icon" ></span>
+    </button>
+
+    <div id="navb" class="navbar-collapse collapse hide">
+
+        <ul class="nav navbar-nav ml-auto">
+
+            {% if user.is_authenticated %}
+
+                    <li class="navbar-item {% if request.path ==  logout%} active {% endif%}">
+                        <a href="{% url 'vw-logout' %}" class="nav-link">
+                            <span class="fas fa-sign-in-alt"></span>
+                            Logoud
+                        </a>
+                    </li>
+
+            {% else %}
+
+                    <li class="navbar-item {% if request.path ==  login%} active {% endif%}">
+                        <a href="{% url 'vw-login' %}" class="nav-link">
+                            <span class="fas fa-user"></span>
+                            Login
+                        </a>
+                    </li>
+
+                    <li class="navbar-item {% if request.path ==  register%} active {% endif%}">
+                        <a href="{% url 'vw-register' %}" class="nav-link">
+                            <span class="fas fa-user-plus"></span>
+                            Registro
+                        </a>
+                    </li> 
+
+            {% endif %}
+        </ul> 
+
+    </div>
+
+</nav>

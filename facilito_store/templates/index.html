@@ -1,32 +1,16 @@
+{% extends 'base.html' %} 
 {% load static %}
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{title}}</title>
+{% block content %}
 
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="{% static 'css/bootstrap.min.css' %}"
-    />
-  </head>
-  <body>
-    <div class="container">
-      {% if messages %}
-        {% for message in messages %}
-          <div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-danger{% endif %}">
-            <button type="button" class="close" data-dismiss="alert">X</button>
-            {{ message }}
-          </div>
-        {% endfor %}
-      {% endif %}
-      <div class="row">
-        <div class="col">
-          <h1>{{message}}</h1>
-          <ul class="list-group">
-            {% for product in products %}
+    <div class="col">
+      
+      <h1>{{message}}</h1>
+      
+      <ul class="list-group">
+        {% for product in products %}
+
             <li class="list-group-item">
+
               {{product.title}}
                 <!-- comentario -->
                 {% if product.stock %} 
@@ -34,18 +18,12 @@
                 {% else %} 
                     <span class="text-danger" >No dispobible</span>
                 {% endif %} 
-
+                
             </li>
-            {% endfor %}
-          </ul>
+        {% endfor %}
+      </ul>
 
-          <img src="{% static 'img/mochila.png'%}" alt="imagen de mochila">
-        </div>
-      </div>
+      <img src="{% static 'img/mochila.png'%}" alt="imagen de mochila">
     </div>
-  </body>
-</html>
-<script src="{% static 'js/jquery-3.3.1.js'%}"></script>
-<script src="{% static 'js/bootstrap.min.js'%}"></script>
-<script src="{% static 'js/popper.min.js'%}"></script>
-<script src="{% static 'js/main.js'%}"></script>
+
+{% endblock %}

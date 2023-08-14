@@ -13,11 +13,9 @@
 
               {{product.title}}
                 <!-- comentario -->
-                {% if product.stock %} 
-                    <span class="text-success" >Disponible</span>
-                {% else %} 
-                    <span class="text-danger" >No dispobible</span>
-                {% endif %} 
+               
+              <span class="text-success" >${{product.price}}</span>
+             
                 
             </li>
         {% endfor %}

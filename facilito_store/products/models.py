@@ -9,4 +9,4 @@ class Product(models.Model):
 
 
     def __str__(self):
-        return self.title
+        return  f'ID: {self.pk}   TITULO: {self.title}'

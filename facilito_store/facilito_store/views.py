@@ -10,6 +10,8 @@ def index(request):
     
     products = Product.objects.all().order_by('-id')
 
+    print(products)
+
     return render(
         request,
         "index.html",

@@ -1,4 +1,5 @@
 from typing import Any, Dict
+from django.db.models.query import QuerySet
 from django.shortcuts import render
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
@@ -15,7 +16,6 @@ class ProductListView(ListView):
 
 
         return context
-    
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'products/product.html'
@@ -24,3 +24,21 @@ class ProductDetailView(DetailView):
         context =  super().get_context_data(**kwargs)  
 
         return context
+    
+class ProductSearchLiestView(ListView):
+    template_name = "products/search.html"
+
+    def get_queryset(self):
+        #es como usar like en sql server
+        return Product.objects.filter(title__icontains= self.query())
+    
+    def query(self):
+        return self.request.GET.get('q')
+    
+    def get_context_data(self, **kwargs: Any):
+        context =  super().get_context_data(**kwargs) 
+        context['query'] = self.query() 
+        context['count'] = context['product_list'].count()
+
+        return context
+    

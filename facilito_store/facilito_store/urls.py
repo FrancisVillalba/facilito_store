@@ -3,6 +3,8 @@ from django.contrib import admin
 from django.urls import path, include
 from products.views import ProductListView  
 from facilito_store.views import login_vw,logout_vw,register_vw
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls), 
@@ -12,3 +14,6 @@ urlpatterns = [
     path('usuarios/registro', register_vw, name='vw-register'),
     path('productos/', include('products.urls'), name='vw-register'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

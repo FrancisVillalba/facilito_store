@@ -12,7 +12,8 @@ urlpatterns = [
     path('', ProductListView.as_view(), name='vw-index'),
     path('usuarios/logout', logout_vw, name='vw-logout'),
     path('usuarios/registro', register_vw, name='vw-register'),
-    path('productos/', include('products.urls'), name='vw-register'),
+    path('productos/', include('products.urls'), name='vw-products'),
+    path('carrito/', include('carts.urls'), name='vw-carts'),
 ]
 
 if settings.DEBUG:

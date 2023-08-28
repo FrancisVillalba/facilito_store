@@ -4,5 +4,6 @@ from . import views
 app_name = 'carts'
 
 urlpatterns = [
-    path('', views.cart, name='cart-view')
+    path('', views.cart, name='cart-view'),
+    path('agregar', views.add, name='add-view')
 ]

@@ -7,14 +7,14 @@ from products.models import Product
 def cart(request):
     
     cart = get_or_create_cart(request)
+    print('XD')
+    print(cart)
 
     return render(request, 'carts/cart.html',{
-
+         'cart' : cart
     })
 
 def add(request):
-    print("xdddddddd")
-    print(request)
     cart = get_or_create_cart(request)
     product = Product.objects.get(pk=request.POST.get('product_id'))
 

@@ -3,9 +3,7 @@ from .models import Cart
 
 
 def get_or_create_cart(request):
-
-    print('Caaaart')    
-    print(request)  
+    
     user = request.user if request.user.is_authenticated else None
     cart_id = request.session.get('cart_id')
     

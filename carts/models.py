@@ -10,7 +10,7 @@ class Cart(models.Model):
     cart_id = models.CharField(max_length=100, null=False, blank=False, unique=True)
     user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
     products = models.ManyToManyField(Product)
-    subTotal = models.DecimalField(default=0.0, max_digits=8, decimal_places=2)
+    subtotal = models.DecimalField(default=0.0, max_digits=8, decimal_places=2)
     total = models.DecimalField(default=0.0, max_digits=8, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -23,12 +23,12 @@ class Cart(models.Model):
         self.update_subtotal()
         self.update_total()
 
-    def update_subtotal(self):
+    def update_subtotal(self): 
         self.subtotal =  sum([ product.price for product in self.products.all()])
         self.save()
 
-    def update_total(self):
-        self.total = self.subTotal + (self.subtotal * decimal.Decimal(Cart.FEE))
+    def update_total(self): 
+        self.total = self.subtotal + (self.subtotal * decimal.Decimal(Cart.FEE))
         self.save()
     
 def set_cart_id(sender, instance, *args, **kwargs):

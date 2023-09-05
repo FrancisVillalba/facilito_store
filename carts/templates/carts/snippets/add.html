@@ -2,7 +2,7 @@
     {% csrf_token %}
     <div class="">
         <button type="button" class="btn btn-info d-inline" id="btnRemove">-</button>
-        <input type="number" name="" value="1" id="inpQuantity" name="inpQuantity" class="form-control col-sm-1 d-inline" readonly>
+        <input type="number" value="1" id="inpQuantity" name="inpQuantity" class="form-control col-sm-1 d-inline" readonly>
         <button type="button" class="btn btn-info" id="btnAdd">+</button>
     </div>
     <input type="hidden" name="product_id" value="{{ product.id }}">

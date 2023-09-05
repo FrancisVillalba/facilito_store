@@ -14,9 +14,15 @@ def cart(request):
 
 def add(request):
     cart = get_or_create_cart(request)
+    print(request.POST)
     # product = Product.objects.get(pk=request.POST.get('product_id'))
     product = get_object_or_404(Product, pk=request.POST.get('product_id'))
-    cart.products.add(product) 
+    inpQuantity = request.POST.get('inpQuantity', 1)
+    
+    cart.products.add(product, through_defaults={
+        'quantity': inpQuantity
+    }) 
+
     return render(request, 'carts/add.html', {
         'product' : product
     })

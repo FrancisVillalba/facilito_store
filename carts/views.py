@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from .models import Cart
+from .models import Cart, CartProducts
 from .utils import get_or_create_cart
 from products.models import Product
 
@@ -17,11 +17,13 @@ def add(request):
     print(request.POST)
     # product = Product.objects.get(pk=request.POST.get('product_id'))
     product = get_object_or_404(Product, pk=request.POST.get('product_id'))
-    inpQuantity = request.POST.get('inpQuantity', 1)
+    quantity = int(request.POST.get('inpQuantity', 1))
     
-    cart.products.add(product, through_defaults={
-        'quantity': inpQuantity
-    }) 
+    # cart.products.add(product, through_defaults={
+    #     'quantity': inpQuantity
+    # }) 
+    
+    cart_product = CartProducts.objects.create_or_update_quantity(cart=cart, product=product, quantity=quantity)
 
     return render(request, 'carts/add.html', {
         'product' : product

@@ -17,15 +17,13 @@ def add(request):
     print(request.POST)
     # product = Product.objects.get(pk=request.POST.get('product_id'))
     product = get_object_or_404(Product, pk=request.POST.get('product_id'))
-    quantity = int(request.POST.get('inpQuantity', 1))
-    
-    # cart.products.add(product, through_defaults={
-    #     'quantity': inpQuantity
-    # }) 
+    quantity = int(request.POST.get('inpQuantity', 1)) 
     
     cart_product = CartProducts.objects.create_or_update_quantity(cart=cart, product=product, quantity=quantity)
 
     return render(request, 'carts/add.html', {
+        'quantity' : quantity,
+        'cart_product' : cart_product,
         'product' : product
     })
 

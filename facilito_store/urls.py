@@ -13,7 +13,9 @@ urlpatterns = [
     path('usuarios/logout', logout_vw, name='vw-logout'),
     path('usuarios/registro', register_vw, name='vw-register'),
     path('productos/', include('products.urls'), name='vw-products'),
-    path('carrito/', include('carts.urls'), name='vw-carts'),
+    # path('carrito/', include('carts.urls'), name='vw-carts'),
+    path('carrito/', include('carts.urls')),
+    path('orden_compras/', include('orders.urls')),
 ]
 
 if settings.DEBUG:

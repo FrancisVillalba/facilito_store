@@ -16,6 +16,7 @@ urlpatterns = [
     # path('carrito/', include('carts.urls'), name='vw-carts'),
     path('carrito/', include('carts.urls')),
     path('orden_compras/', include('orders.urls')),
+    path('direcciones/', include('shipping_addresses.urls')),
 ]
 
 if settings.DEBUG:

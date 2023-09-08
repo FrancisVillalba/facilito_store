@@ -6,4 +6,5 @@ app_name = 'shipping_addresses'
 urlpatterns = [
     path('', views.ShippingAddressListView.as_view(), name='shipping-address-view'), 
     path('nuevo', views.create, name='create-view'), 
+    path('editar/<int:pk>', views.ShippingAddressUpdateView.as_view(), name='update-view'), 
 ]

@@ -1,13 +1,16 @@
 from typing import Any
 from django.db.models.query import QuerySet
 from django.shortcuts import render
+from django.urls import reverse
 from django.views.generic import ListView
+from django.views.generic.edit import UpdateView
 from .models import ShippingAddress
 from .forms import ShippingAddressForm
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 
@@ -18,7 +21,20 @@ class ShippingAddressListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return ShippingAddress.objects.filter(user=self.request.user).order_by('-default')
+
+class ShippingAddressUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    login_url = 'vw-login'
+
+    model = ShippingAddress
+    form_class = ShippingAddressForm
+    template_name = 'shipping_addresses/update.html'
+    success_message = 'Dirección fue actualizada correctamente'
+
+    def get_success_url(self):
+        return reverse('shipping_addresses:shipping-address-view')
     
+
+
 @login_required(login_url='vw-login')
 def create(request):
     form = ShippingAddressForm(request.POST or None)

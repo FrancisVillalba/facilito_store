@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="col">
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="h4">
+                ¿Estas seguro de eliminar la dirección?
+            </div>
+
+            <input type="submit" class="btn btn-danger" value="Eliminar">
+        </form>
+        <!-- 
+        <div class="">
+            {% include 'shipping_addresses/snippets/form.html' with message='Actualizar'%}
+        </div> -->
+    </div>
+{% endblock %}

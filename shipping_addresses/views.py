@@ -3,9 +3,9 @@ from django import http
 from django.db.models.query import QuerySet
 from django.http.response import HttpResponse
 from django.shortcuts import render
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView
-from django.views.generic.edit import UpdateView
+from django.views.generic.edit import UpdateView, DeleteView
 from .models import ShippingAddress
 from .forms import ShippingAddressForm
 from django.shortcuts import redirect
@@ -30,7 +30,7 @@ class ShippingAddressUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateV
     model = ShippingAddress
     form_class = ShippingAddressForm
     template_name = 'shipping_addresses/update.html'
-    success_message = 'Dirección fue actualizada correctamente'
+    success_url = reverse_lazy('shipping_addresses:shipping-address-view')
 
     def get_success_url(self):
         return reverse('shipping_addresses:shipping-address-view')
@@ -42,7 +42,20 @@ class ShippingAddressUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateV
         
         return super(ShippingAddressUpdateView, self).dispatch(request, *args, **kwargs)
     
+class ShippingAddressDeleteView(LoginRequiredMixin, DeleteView):
+    login_url = 'vw-login'
+    model = ShippingAddress
+    template_name = 'shipping_addresses/delete.html'
+    success_url = reverse_lazy('shipping_addresses:shipping-address-view')
 
+    def dispatch(self, request, *args, **kwargs):
+        if self.get_object().defaul:
+            return redirect('shipping_addresses:shipping-address-view')
+        
+        if request.user.id != self.get_object().user_id:
+            return redirect('carts:cart-view')
+        
+        return super(ShippingAddressDeleteView, self).dispatch(request, *args, **kwargs)
 
 @login_required(login_url='vw-login')
 def create(request):

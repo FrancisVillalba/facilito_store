@@ -2,7 +2,7 @@ from typing import Any
 from django import http
 from django.db.models.query import QuerySet
 from django.http.response import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView
 from django.views.generic.edit import UpdateView, DeleteView
@@ -75,3 +75,17 @@ def create(request):
     return render(request, 'shipping_addresses/create.html',{
         'form': form
     })
+
+def default(request, pk):
+    shipping_address = get_object_or_404(ShippingAddress, pk=pk)
+
+    if request.user.id != shipping_address.user_id:
+        return redirect('carts:cart-view')
+    
+    if request.user.has_shipping_address():
+        request.user.shipping_address.update_default()    
+         
+   
+    shipping_address.update_default(True)
+
+    return redirect('shipping_addresses:shipping-address-view')

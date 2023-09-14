@@ -19,7 +19,8 @@
             Registra tu dirección de envío
         </div>
         <div class="">
-            <a href="{% url  'shipping_addresses:create-view' %}" >Nueva dirección de envio</a>
+            {% url 'orders:address-view' as next_url %}
+            <a href="{% url  'shipping_addresses:create-view' %}?next={{next_url}}" >Nueva dirección de envio</a>
         </div>
     {% endif %}
  </div>

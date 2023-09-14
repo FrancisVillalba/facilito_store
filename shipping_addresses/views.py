@@ -6,6 +6,9 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView
 from django.views.generic.edit import UpdateView, DeleteView
+from django.http import HttpResponseRedirect
+from carts.utils import get_or_create_cart
+from orders.utils import get_or_create_order
 from .models import ShippingAddress
 from .forms import ShippingAddressForm
 from django.shortcuts import redirect
@@ -68,8 +71,16 @@ def create(request):
 
         shipping_address.save()
 
-        messages.success(request,'Dirección creada con exito.')
+        if request.GET.get('next'):
+            if request.GET['next'] == reverse('orders:address-view'):
+                cart = get_or_create_cart(request)
+                order = get_or_create_order(cart, request)
 
+                order.update_shipping_address(shipping_address)
+
+                return HttpResponseRedirect(request.GET['next'])
+
+        messages.success(request,'Dirección creada con exito.') 
         return redirect('shipping_addresses:shipping-address-view')
 
     return render(request, 'shipping_addresses/create.html',{

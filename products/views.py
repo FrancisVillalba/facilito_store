@@ -37,7 +37,7 @@ class ProductSearchLiestView(ListView):
     def query(self):
         return self.request.GET.get('q')
     
-    def get_context_data(self, **kwargs: Any):
+    def get_context_data(self, **kwargs):
         context =  super().get_context_data(**kwargs) 
         context['query'] = self.query() 
         context['count'] = context['product_list'].count()

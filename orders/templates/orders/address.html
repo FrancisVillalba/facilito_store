@@ -1,0 +1,27 @@
+{% extends 'base.html' %} 
+{% block breadcrumb %}
+     {%include 'orders/snippets/breadcrumb.html'%}
+{% endblock %}
+
+
+{% block content %}
+
+ <div class="col">
+    {% if sd %}
+        <div class="h3">
+            Recoge el pedido en el punto de entrega
+        </div>
+        <div class="">
+            {%include 'shipping_addresses/snippets/shipping_addresses.html' with edit=False %}
+        </div>
+    {% else %}
+        <div class="h3">
+            Registra tu dirección de envío
+        </div>
+        <div class="">
+            <a href="{% url  'shipping_addresses:create-view' %}" >Nueva dirección de envio</a>
+        </div>
+    {% endif %}
+ </div>
+
+{% endblock %}

@@ -10,26 +10,7 @@
         Productos: {{ cart.total | price_format }}
         <br>
         Envio: {{ order.shipping_total | price_format }}
-        <!-- <div class="">
-            <div class="table table-borderless table-sm">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Productos:</td>
-                        <td>{{ cart.total | price_format }}</td>
-                    </tr>
-                    <tr>
-                        <td>Envío:</td>
-                        <td>{{ order.shipping_total | price_format }}</td>
-                    </tr>
-                </tbody>
-            </div>
-        </div> -->
+       
 
         <hr>
 
@@ -41,7 +22,7 @@
         </div>
         <hr>
         <div class="">
-            <a href="#" class="btn btn-warning btn-block">Confirmar pedido</a>
+            <a href="{% url  'orders:address-view' %}" class="btn btn-warning btn-block">Confirmar pedido</a>
         </div>
     </div>
 </div>

@@ -26,7 +26,7 @@ class ShippingAddressListView(LoginRequiredMixin, ListView):
 
 class ShippingAddressUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     login_url = 'vw-login'
-
+ 
     model = ShippingAddress
     form_class = ShippingAddressForm
     template_name = 'shipping_addresses/update.html'

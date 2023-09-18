@@ -1,9 +1,10 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from carts.utils import get_or_create_cart
+from carts.utils import get_or_create_cart, destroy_cart
 from shipping_addresses.models import ShippingAddress 
 from .models import Order
-from .utils import get_or_create_order, breadcrumb
+from .utils import get_or_create_order, breadcrumb, destroy_order
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 # Create your views here.
 @login_required(login_url='vw-login')
@@ -73,4 +74,20 @@ def confirm(request):
         'shipping_address' : shipping_address,
         'breadcrumb': breadcrumb(address=True, confirmation=True), 
     })
+
+@login_required(login_url='vw-login')
+def cancel(request):
+     cart = get_or_create_cart(request)
+     order = get_or_create_order(cart, request)
+
+     if request.user.id != order.user_id:
+         return redirect('carts:cart-view')
+     
+     order.cancel()
+
+     destroy_order(request)
+     destroy_cart(request)
+
+     messages.error(request, 'Orden cancelada')
+     return redirect('vw-index')
 

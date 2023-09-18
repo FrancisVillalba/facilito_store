@@ -14,7 +14,6 @@ def get_or_create_order(cart, request):
 
     return order
 
-
 def breadcrumb(products=True, address=False, payment=False, confirmation=False):
     return[
         {'title':'Productos', 'active': products, 'url': reverse('orders:order-view')},
@@ -22,3 +21,6 @@ def breadcrumb(products=True, address=False, payment=False, confirmation=False):
         {'title':'Pago', 'active': payment, 'url': reverse('orders:order-view')},
         {'title':'Confirmación', 'active': confirmation, 'url': reverse('orders:order-view')},
     ]
+
+def destroy_order(request):
+    request.session['order_id'] = None

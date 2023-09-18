@@ -91,3 +91,19 @@ def cancel(request):
      messages.error(request, 'Orden cancelada')
      return redirect('vw-index')
 
+@login_required(login_url='vw-login')
+def complete(request):
+     cart = get_or_create_cart(request)
+     order = get_or_create_order(cart, request)
+
+     if request.user.id != order.user_id:
+         return redirect('carts:cart-view')
+     
+     order.complete()
+
+     destroy_order(request)
+     destroy_cart(request)
+
+     messages.success(request, 'Compra completada exitosamente')
+     return redirect('vw-index')
+

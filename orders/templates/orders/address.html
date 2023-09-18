@@ -12,13 +12,18 @@
             Recoge el pedido en el punto de entrega
         </div>
         <div class="">
-            {%include 'shipping_addresses/snippets/shipping_addresses.html' with edit=False %}
+            {%include 'shipping_addresses/snippets/shipping_addresses.html' %}
+            {% if can_choose_address %}
+                <div class="mt-2">
+                    <a href="{% url  'orders:select_address-view' %}">Otra dirección</a>
+                </div> 
+            {% endif %}
         </div>
     {% else %}
         <div class="h3">
             Registra tu dirección de envío
         </div>
-        <div class="">
+        <div class="mt-2">
             {% url 'orders:address-view' as next_url %}
             <a href="{% url  'shipping_addresses:create-view' %}?next={{next_url}}" >Nueva dirección de envio</a>
         </div>

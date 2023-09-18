@@ -52,11 +52,17 @@ class ShippingAddressDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('shipping_addresses:shipping-address-view')
 
     def dispatch(self, request, *args, **kwargs):
-        if self.get_object().defaul:
+
+        if self.get_object().default:
             return redirect('shipping_addresses:shipping-address-view')
         
         if request.user.id != self.get_object().user_id:
             return redirect('carts:cart-view')
+        
+        if self.get_object().has_orders():
+
+            return redirect('shipping_addresses:shipping-address-view')
+
         
         return super(ShippingAddressDeleteView, self).dispatch(request, *args, **kwargs)
 

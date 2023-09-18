@@ -1,0 +1,28 @@
+{% extends 'base.html' %} 
+{% block breadcrumb %}
+     {%include 'orders/snippets/breadcrumb.html'%}
+{% endblock %}
+
+
+{% block content %}
+
+ <div class="col">
+    <div class="h3">
+        Selecciona una dirección de envío
+    </div>
+    <div class="mt-2">
+        {% for sas in shipping_addresses %}
+            <div class="card mb-2">
+                <div class="card-body">
+                    <h5 class="card-title">{{sas.address}}</h5>
+                    <p class="card-title">{{sas.postal_code}}</p>
+                    <a href="{% url 'orders:check_address-view' sas.pk %}" class="btn btn-warning">
+                        Seleccionar dirección
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+ </div>
+
+{% endblock %}

@@ -3,6 +3,7 @@
 {% url 'vw-logout' as logout %} 
 {% url 'carts:cart-view' as cart %} 
 {% url 'shipping_addresses:shipping-address-view' as shipping_addresse %} 
+{% url 'orders:completeds-view' as completeds %} 
 
 <nav class="navbar navbar-expand-md bg-dark navbar-dark ">
     <a href="{% url 'vw-index' %}" class="navbar-brand">Facilito store</a>
@@ -26,6 +27,13 @@
                         <span class="fas fa-location-arrow"></span>
                     </a>
                 </li>
+
+                <li class="nav-item {% if request.path == completeds %}active{% endif %}">
+                    <a class="nav-link" href="{{completeds}}">Mis pedidos
+                        <span class="fas fa-shipping-fast"></span>
+                    </a>
+                </li>
+
             {% endif %}
         </ul>
 

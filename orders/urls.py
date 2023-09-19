@@ -12,4 +12,5 @@ urlpatterns = [
     path('confirmacion', views.confirm, name='confirm-view'),
     path('cancelar', views.cancel, name='cancel-view'),
     path('completar', views.complete, name='complete-view'),
+    path('completados', views.OrderListView.as_view(), name='completeds-view'),
 ]

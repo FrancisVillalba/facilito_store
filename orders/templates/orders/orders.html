@@ -1,0 +1,19 @@
+{% extends 'base.html' %} 
+<!-- {% block breadcrumb %}
+     {%include 'orders/snippets/breadcrumb.html'%}
+{% endblock %} -->
+
+{% block content %}
+ <div class="col">
+    <div class="h3">
+        Mis pedidos
+    </div>
+
+    <div class="">
+        {% for order in object_list %}
+            {% include 'orders/snippets/order.html' %}
+        {% endfor %}
+    </div>
+ </div>
+
+{% endblock %}

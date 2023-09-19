@@ -6,6 +6,16 @@ from .models import Order
 from .utils import get_or_create_order, breadcrumb, destroy_order
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.list import ListView
+from django.db.models.query import EmptyQuerySet
+
+class OrderListView(LoginRequiredMixin, ListView):
+    login_url = 'vw-login'
+    template_name = 'orders/orders.html'
+
+    def get_queryset(self):
+        return self.request.user.orders_completed()
 
 # Create your views here.
 @login_required(login_url='vw-login')

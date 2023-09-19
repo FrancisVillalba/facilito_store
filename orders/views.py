@@ -38,7 +38,7 @@ def address(request, cart, order):
     # order = get_or_create_order(cart, request)
 
     shipping_address = order.get_or_set_shipping_address()
-    can_choose_address = request.user.shippingaddress_set.count() > 1
+    can_choose_address = request.user.has_shipping_addresses()
 
     return render(request, 'orders/address.html', {
         'cart' : cart,

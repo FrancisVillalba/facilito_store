@@ -9,6 +9,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.list import ListView
 from django.db.models.query import EmptyQuerySet
+from .decorators import validate_cart_and_order
 
 class OrderListView(LoginRequiredMixin, ListView):
     login_url = 'vw-login'
@@ -19,10 +20,11 @@ class OrderListView(LoginRequiredMixin, ListView):
 
 # Create your views here.
 @login_required(login_url='vw-login')
-def order(request): 
-    cart = get_or_create_cart(request)
-    order = get_or_create_order(cart, request)
-
+@validate_cart_and_order
+def order(request, cart, order): 
+    # cart = get_or_create_cart(request)
+    # order = get_or_create_order(cart, request)
+ 
     return render(request, 'orders/order.html', {
         'cart': cart, 
         'order': order,
@@ -30,9 +32,10 @@ def order(request):
     })
 
 @login_required(login_url='vw-login')
-def address(request):
-    cart = get_or_create_cart(request)
-    order = get_or_create_order(cart, request)
+@validate_cart_and_order
+def address(request, cart, order):
+    # cart = get_or_create_cart(request)
+    # order = get_or_create_order(cart, request)
 
     shipping_address = order.get_or_set_shipping_address()
     can_choose_address = request.user.shippingaddress_set.count() > 1
@@ -55,10 +58,10 @@ def select_address(request):
     })
 
 @login_required(login_url='vw-login')
-def check_address(request, pk):
-     
-    cart = get_or_create_cart(request)
-    order = get_or_create_order(cart, request)
+@validate_cart_and_order
+def check_address(request, cart, order, pk): 
+    # cart = get_or_create_cart(request)
+    # order = get_or_create_order(cart, request)
 
     shipping_address = get_object_or_404(ShippingAddress, pk=pk)
 
@@ -88,6 +91,8 @@ def confirm(request):
 
 @login_required(login_url='vw-login')
 def cancel(request):
+     
+    #  Se puedo obtimizar usando el decorador @validate_cart_and_order
      cart = get_or_create_cart(request)
      order = get_or_create_order(cart, request)
 
@@ -104,6 +109,7 @@ def cancel(request):
 
 @login_required(login_url='vw-login')
 def complete(request):
+     #  Se puedo obtimizar usando el decorador @validate_cart_and_order
      cart = get_or_create_cart(request)
      order = get_or_create_order(cart, request)
 

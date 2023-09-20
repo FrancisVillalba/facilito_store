@@ -8,6 +8,7 @@ from .models import PromoCode
 # Create your views here.
 
 def validate(request):
+    print('AAAAAAAAAAAAAAAAAAAAAAAAA')
     cart = get_or_create_cart(request)
     order = get_or_create_order(cart, request)
 

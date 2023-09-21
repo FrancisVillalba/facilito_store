@@ -20,6 +20,9 @@ class User(AbstractUser):
     @property
     def description(self):
         return 'Descripción para el usuario {}'.format(self.username)
+    
+    def has_billing_profiles(self):
+        return self.billingprofile_set.exists()
 
     def has_customer(self):
         return self.customer_id is not None

@@ -131,6 +131,8 @@ EMAIL_HOST_USER = 'franvillagobolt@gmail.com'
 EMAIL_HOST_PASSWORD =  'lizavera1991'
 EMAIL_USER_TLS = True
 
+STRIPE_PUBLIC_KEY = 'pk_test_51NsouZAzVT8YL5G7xTBcwkewYxwGpPliI6i0ejrXGfmD83bdPvVNUZ2FthEEbSSqgMpkVbRzl8ZwrMGQ4U5RHwOV000ijNSEUj'
+STRIPE_PRIVATE_KEY = 'sk_test_51NsouZAzVT8YL5G7ppIaIfg7oiXxh11uCAcF9qAgYiZgRqWWfRT82ycBV3eqLIEephPPp1mgo9yrCIzxwSOvmRhU00XVfKu8gQ'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/

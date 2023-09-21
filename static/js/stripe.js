@@ -1,7 +1,7 @@
 // Create a Stripe client.
-//const stripe_public_key = document.querySelector("meta[name='stripe_public_key']").getAttribute('content')
-//var stripe = Stripe(stripe_public_key);
-var stripe = Stripe('pk_test_51NsouZAzVT8YL5G7xTBcwkewYxwGpPliI6i0ejrXGfmD83bdPvVNUZ2FthEEbSSqgMpkVbRzl8ZwrMGQ4U5RHwOV000ijNSEUj')
+const stripe_public_key = document.querySelector("meta[name='stripe_public_key']").getAttribute('content')
+var stripe = Stripe(stripe_public_key);
+//ar stripe = Stripe('pk_test_51NsouZAzVT8YL5G7xTBcwkewYxwGpPliI6i0ejrXGfmD83bdPvVNUZ2FthEEbSSqgMpkVbRzl8ZwrMGQ4U5RHwOV000ijNSEUj')
 
 // Create an instance of Elements.
 var elements = stripe.elements();

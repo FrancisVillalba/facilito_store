@@ -7,8 +7,12 @@
 
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}"/>
 
+    {% if stripe_public_key %}
+      <meta name="stripe_public_key" content="{{ stripe_public_key }}">
+    {% endif %}
+
     {% block css %} 
-    
+
     {% endblock %}
   </head>
   <body>

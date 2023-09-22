@@ -24,6 +24,10 @@ class OrderListView(LoginRequiredMixin, ListView):
 def order(request, cart, order): 
     # cart = get_or_create_cart(request)
     # order = get_or_create_order(cart, request)
+
+    if not cart.has_products():
+        return redirect('carts:cart-view')
+
  
     return render(request, 'orders/order.html', {
         'cart': cart, 
@@ -36,9 +40,11 @@ def order(request, cart, order):
 def address(request, cart, order):
     # cart = get_or_create_cart(request)
     # order = get_or_create_order(cart, request)
-
+    if not cart.has_products():
+        return redirect('carts:cart-view')
+    
     shipping_address = order.get_or_set_shipping_address()
-    can_choose_address = request.user.has_shipping_addresses()
+    can_choose_address = request.user.has_shipping_addresses() 
 
     return render(request, 'orders/address.html', {
         'cart' : cart,
@@ -75,19 +81,30 @@ def check_address(request, cart, order, pk):
 @login_required(login_url='vw-login')
 @validate_cart_and_order
 def payment(request, cart, order):
+
+    if not cart.has_products() or order.shipping_address is None or order.billing_profile is None:
+        return redirect('carts:cart-view')
+    
+
     billing_profile = order.get_or_set_billing_profile()
 
     return render(request,'orders/payment.html',{
         'cart': cart,
         'order': order,
         'billing_profile' : billing_profile,
-        'breadcrumb': breadcrumb(address=True, payment=True)
+        'breadcrumb': breadcrumb(address=True, payment=True, confirmation=True)
     })
 
 @login_required(login_url='vw-login')
-def confirm(request):
-    cart = get_or_create_cart(request)
-    order = get_or_create_order(cart, request)
+@validate_cart_and_order
+def confirm(request, cart, order):
+
+    if not cart.has_products():
+        return redirect('carts:cart-view')
+    
+
+    # cart = get_or_create_cart(request)
+    # order = get_or_create_order(cart, request)
 
     shipping_address = order.shipping_address
     if shipping_address is None:

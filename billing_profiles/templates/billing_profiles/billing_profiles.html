@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+<!-- {% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/stripe.css' %}">
+
+{% endblock %} -->
+
+{% block content %}
+    <div class="col">
+        <div class="h3">
+            Listar métodos de pago
+        </div>
+        <div class=""> 
+            <a href="{% url 'billing_profiles:create-view' %}">Nuevo metodo de pago</a>
+        </div>
+        <div class="mt-2"> 
+            {% for billing_profile in object_list %}
+                {% include 'billing_profiles/snippets/billing_profile.html' %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %} 

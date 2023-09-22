@@ -46,6 +46,11 @@ class User(AbstractUser):
     def addresses(self):
         return self.shippingaddress_set.all()
     
+    @property
+    def billing_profiles(self):
+        return self.billingprofile_set.all().order_by('-default')
+
+    
     
 class Customer(User):
     class Meta:

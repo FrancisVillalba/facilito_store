@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from carts.utils import get_or_create_cart, destroy_cart
+from charges.models import Charge
 from .mails import Mail
 from shipping_addresses.models import ShippingAddress 
 from .models import Order
@@ -144,13 +145,21 @@ def complete(request):
      if request.user.id != order.user_id:
          return redirect('carts:cart-view')
      
-     order.complete()
+     charge = Charge.objects.create_charge(order)
+     if charge:
+        order.complete()
+
+        # thread = threading.Thread(target=Mail.send_complete_order, args=(
+        #     order, request.user
+        # ))
+        # thread.start()
 
     #  Mail.send_complete_order(order, request.user)
 
-     destroy_order(request)
-     destroy_cart(request)
+        destroy_order(request)
+        destroy_cart(request)
 
-     messages.success(request, 'Compra completada exitosamente')
+        messages.success(request, 'Compra completada exitosamente')
+
      return redirect('vw-index')
 

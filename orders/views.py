@@ -11,6 +11,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.list import ListView
 from django.db.models.query import EmptyQuerySet
 from .decorators import validate_cart_and_order
+from django.db import transaction
 
 class OrderListView(LoginRequiredMixin, ListView):
     login_url = 'vw-login'
@@ -83,7 +84,7 @@ def check_address(request, cart, order, pk):
 @validate_cart_and_order
 def payment(request, cart, order):
 
-    if not cart.has_products() or order.shipping_address is None or order.billing_profile is None:
+    if not cart.has_products() or order.shipping_address is None:
         return redirect('carts:cart-view')
     
 
@@ -100,7 +101,7 @@ def payment(request, cart, order):
 @validate_cart_and_order
 def confirm(request, cart, order):
 
-    if not cart.has_products():
+    if not cart.has_products() or order.shipping_address is None or order.billing_profile is None:
         return redirect('carts:cart-view')
     
 
@@ -146,20 +147,21 @@ def complete(request):
          return redirect('carts:cart-view')
      
      charge = Charge.objects.create_charge(order)
-     if charge:
-        order.complete()
+     if charge: 
+        with transaction.atomic(): 
+            order.complete()
 
-        # thread = threading.Thread(target=Mail.send_complete_order, args=(
-        #     order, request.user
-        # ))
-        # thread.start()
+            # thread = threading.Thread(target=Mail.send_complete_order, args=(
+            #     order, request.user
+            # ))
+            # thread.start()
 
-    #  Mail.send_complete_order(order, request.user)
+        #  Mail.send_complete_order(order, request.user)
 
-        destroy_order(request)
-        destroy_cart(request)
+            destroy_order(request)
+            destroy_cart(request)
 
-        messages.success(request, 'Compra completada exitosamente')
+            messages.success(request, 'Compra completada exitosamente')
 
      return redirect('vw-index')
 
